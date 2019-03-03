@@ -8,6 +8,7 @@
         map-type-id="terrain"
         style="width: 100%; height: 675px; position: relative hue: 220022"
         :options="{styles: styles}"
+
       >       
          <GmapMarker
           :key="index"
@@ -257,7 +258,25 @@
       ]
     }
   ]
- } } }    
+ } } ,
+      return: {
+      currentLocation : { lat : 0, lng : 0},
+      searchAddressInput: ''
+    },
+  mounted : function() {
+    this.geolocation();
+ },
+ methods: {
+    geolocation : function() {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.currentLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
+    }
+}
+ }    
 </script>  
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

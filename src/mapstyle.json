@@ -1,25 +1,4 @@
-<template>
-  <GmapMap
-  :center="{lat:39.276776, lng:-76.612131}"
-  :zoom="15"
-  map-type-id="terrain"
-  style="width: 100%; height: 675px; position: relative hue: 220022"
-  :options="{styles: styles}"
->
-  <GmapMarker
-    :key="index"
-    v-for="(m, index) in markers"
-    :position="m.position"
-    :clickable="true"
-    :draggable="true"
-    @click="center=m.position"
-  />
-</GmapMap>  
-</template>
-
-// mapstyle defined
-<script>
-    export default { data () { return { styles: [
+[
     {
       "elementType": "geometry",
       "stylers": [
@@ -252,5 +231,3 @@
       ]
     }
   ]
- } } }
-</script>

@@ -32,7 +32,7 @@
 
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+      <v-btn icon @click.stop="rightDrawer = !rightDrawer" @click="geolocation()">
         <v-icon>add_comment</v-icon>  
       </v-btn>
     </v-toolbar>
@@ -50,22 +50,23 @@
     
         <v-list>
           <v-spacer/>
-              <v-form id="post_name" ref="form" v-model="valid" lazy-validation>
+              <v-form id="post_name" ref="form" >
                   <input v-model="message" placeholder="Name of post" >
               </v-form>
           <v-spacer/>
-              <v-form id="post_name" ref="form" v-model="valid" lazy-validation>
+              <v-form id="post_name" ref="form" n>
                   <input v-model="message" placeholder="Your Message" >
               </v-form>
+
             <v-btn
-                :disabled="!valid"
+                left
+                id="submit"
                 @click="submit"
-            >
-                submit
+            >Submit
             </v-btn>
-            <v-btn @click="clear">clear</v-btn>
+            <v-btn id="clear" left @click="clear">Clear</v-btn>
         </v-list>
-    </v-navigation-drawer>ß
+    </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
       <span>s.andrewfleming@gmail.com</span>
     </v-footer>
@@ -108,7 +109,8 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
+};
+
 
 </style>
 
