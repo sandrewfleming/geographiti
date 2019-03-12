@@ -47,22 +47,22 @@
       app
     >
     <!--form  -->
-        <v-list>
-          <v-spacer/>
-              <v-form id="post_name" ref="form" v-model="valid" lazy-validation>
-                  <input v-model="message" placeholder="Name of post" >
-              </v-form>
-          <v-spacer/>
-              <v-form id="post_name" ref="form" v-model="valid" lazy-validation>
-                  <input v-model="message" placeholder="Your Message" >
-              </v-form>
-            <v-btn
-                @click="add_marker"
-            >
-                submit
-            </v-btn>
-            <v-btn @click="clear">clear</v-btn>
-        </v-list>
+          <v-list>
+            <v-spacer/>
+                <v-form id="post_name" ref="form" v-model="valid" lazy-validation>
+                    <input v-model="message" placeholder="Name of post" >
+                </v-form>
+            <v-spacer/>
+                <v-form id="post_name" ref="form" v-model="valid" lazy-validation>
+                    <input v-model="message" placeholder="Your Message" >
+                </v-form>
+              <v-btn
+                  @click="add_marker"
+              >
+                  submit
+              </v-btn>
+              <v-btn @click="clear">clear</v-btn>
+          </v-list>
     </v-navigation-drawer>ß
     <v-footer :fixed="fixed" app>
       <span>s.andrewfleming@gmail.com</span>
@@ -79,6 +79,9 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      markers: [],
+      places: [],
+      currentPlace: null,
       items: [{
         icon: 'person_outline',
         title: 'Register'
@@ -92,20 +95,44 @@ export default {
       title: 'Geografiti',
     }
   },
+    mounted() {
+    this.geolocate();
+  },
   methods: {
-    add_marker() {
-  var myLatLng = {lat:39.276776, lng:-76.612131};
+        addMarker() {
+      if (this.currentPlace) {
+        const marker = {
+          lat: this.currentPlace.geometry.location.lat(),
+          lng: this.currentPlace.geometry.location.lng()
+        };
+        this.markers.push({ position: marker });
+        this.places.push(this.currentPlace);
+        this.center = marker;
+        this.currentPlace = null;
+      }
+    },
+  //OLD ADD_MARKER  
+  //   add_marker() {
+  // var myLatLng = {lat:39.276776, lng:-76.612131};
 
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: myLatLng
-  });
+  // var map = new google.maps.Map(document.getElementById('map'), {
+  //   zoom: 4,
+  //   center: myLatLng
+  // });
 
-  var marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    title: 'Hello World!'
-  });
+  // var marker = new google.maps.Marker({
+  //   position: myLatLng,
+  //   map: map,
+  //   title: 'Hello World!'
+  // });
+    },
+        geolocate: function() {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
     }
   }
 }
